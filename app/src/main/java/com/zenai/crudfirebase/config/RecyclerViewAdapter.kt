@@ -17,29 +17,14 @@ import com.zenai.crudfirebase.activity.MyListData
 import com.zenai.crudfirebase.activity.UpdateData
 import com.zenai.crudfirebase.models.DataMahasiswa
 
-//Membuat Interfece
-interface dataListener {
-    fun onDeleteData(data: DataMahasiswa?, position: Int)
-}
+
 
 
 class RecyclerViewAdapter(private var listMahasiswa: ArrayList<DataMahasiswa>,
                           context: Context
 ) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-    private var context: Context
-
-    //Deklarasi objek dari Interfece
-    var listener: dataListener? = null
-
-    //Membuat Konstruktor, untuk menerima input dari Database
-    fun RecyclerViewAdapter(listMahasiswa: ArrayList<DataMahasiswa>?, context:
-    Context?) {
-        this.listMahasiswa = listMahasiswa!!
-        this.context = context!!
-        listener = context as MyListData?
-    }
-
+    private val context: Context
 
     //ViewHolder Digunakan Untuk Menyimpan Referensi Dari View-View
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,7 +32,8 @@ class RecyclerViewAdapter(private var listMahasiswa: ArrayList<DataMahasiswa>,
         val Nama: TextView
         val Jurusan: TextView
         val ListItem: LinearLayout
-        init {//Menginisialisasi View yang terpasang pada layout RecyclerView kita
+        init {
+            //Menginisialisasi View yang terpasang pada layout RecyclerView kita
             NIM = itemView.findViewById(R.id.nimx)
             Nama = itemView.findViewById(R.id.namax)
             Jurusan = itemView.findViewById(R.id.jurusanx)
@@ -57,7 +43,7 @@ class RecyclerViewAdapter(private var listMahasiswa: ArrayList<DataMahasiswa>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
-//Membuat View untuk Menyiapkan & Memasang Layout yang digunakan pada RecyclerView
+    //Membuat View untuk Menyiapkan & Memasang Layout yang digunakan pada RecyclerView
         val V: View = LayoutInflater.from(parent.getContext()).inflate(
             R.layout.view_design, parent, false)
         return ViewHolder(V)
@@ -105,13 +91,30 @@ class RecyclerViewAdapter(private var listMahasiswa: ArrayList<DataMahasiswa>,
                             alert.show()
                             true
                         }
-                        return true;
+                        return true
                     }
                 })
                 return true
             }
         })
     }
+
+    //Membuat Interfece
+    interface dataListener {
+        fun onDeleteData(data: DataMahasiswa?, position: Int)
+    }
+
+    //Deklarasi objek dari Interfece
+    var listener: dataListener? = null
+
+    //Membuat Konstruktor, untuk menerima input dari Database
+    fun RecyclerViewAdapter(listMahasiswa: ArrayList<DataMahasiswa>?, context:
+    Context?) {
+        this.listMahasiswa = listMahasiswa!!
+        this.context = context!!
+        listener = context as MyListData?
+    }
+
     override fun getItemCount(): Int {
         //Menghitung Ukuran/Jumlah Data Yang Akan Ditampilkan Pada RecyclerView
         return listMahasiswa.size

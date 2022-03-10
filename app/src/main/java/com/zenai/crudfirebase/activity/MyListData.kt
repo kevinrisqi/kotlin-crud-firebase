@@ -15,10 +15,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.zenai.crudfirebase.R
 import com.zenai.crudfirebase.config.RecyclerViewAdapter
-import com.zenai.crudfirebase.config.dataListener
 import com.zenai.crudfirebase.models.DataMahasiswa
 
-class MyListData : AppCompatActivity(), dataListener {
+class MyListData : AppCompatActivity(), RecyclerViewAdapter.dataListener {
     //Deklarasi Variable untuk RecyclerView
     private var recyclerView: RecyclerView? = null
     private var adapter: RecyclerView.Adapter<*>? = null
@@ -74,9 +73,9 @@ class MyListData : AppCompatActivity(), dataListener {
     }
 
     override fun onDeleteData(data: DataMahasiswa?, position: Int) {
-/* Kode ini akan dipanggil ketika method onDeleteData dipanggil dari adapter
-* pada RecyclerView melalui interface. kemudian akan menghapus data berdasarkan
-* primary key dari data tersebut Jika berhasil, maka akan memunculkan Toast */
+    /* Kode ini akan dipanggil ketika method onDeleteData dipanggil dari adapter
+    * pada RecyclerView melalui interface. kemudian akan menghapus data berdasarkan
+    * primary key dari data tersebut Jika berhasil, maka akan memunculkan Toast */
         val getUserID: String = auth?.getCurrentUser()?.getUid().toString()
         val getReference = database.getReference()
         val getKey = intent.extras!!.getString("getPrimaryKey")
